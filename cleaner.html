@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lee's Hana Lei Cleaners | Premium Dry Cleaning</title>
+    <style>
+        /* CSS Reset & Brand Variables */
+        :root {
+            --primary: #1a365d; 
+            --secondary: #e53e3e; 
+            --light-bg: #f7fafc;
+            --text-main: #2d3748;
+            --text-light: #718096;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        .container { width: 90%; max-width: 1200px; margin: auto; }
+        
+        /* Utility Top Bar */
+        .top-bar {
+            background: var(--light-bg);
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .hours-badge {
+            background: var(--primary);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+        .top-links a { margin-left: 15px; font-weight: bold; color: var(--primary); }
+
+        /* Main Navigation */
+        nav {
+            padding: 20px 0;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;}
+        
+        /* Hamburger Menu Icon (Hidden on Desktop) */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--primary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links a { margin-left: 20px; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--secondary); }
+        .btn-main {
+            background: var(--secondary);
+            color: #fff !important;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 20px;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .btn-main:hover { background: #c53030; }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(rgba(26, 54, 93, 0.65), rgba(26, 54, 93, 0.65)), 
+                        url('images/main-4.jpg') center/cover;
+            color: #fff;
+            padding: 150px 0;
+        }
+        .hero .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+        }
+        .hero h1 { font-size: 3.5rem; margin-top: 0; margin-bottom: 15px; line-height: 1.2; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; color: #e2e8f0; }
+        
+        /* QR Code Card */
+        .qr-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            color: var(--text-main);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            width: 200px;
+        }
+        .qr-card img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+        .qr-card h4 { margin: 0 0 5px 0; color: var(--secondary); font-size: 1.2rem; }
+        .qr-card p { margin: 0; font-size: 0.85rem; color: var(--text-light); }
+
+        /* Specialized Services - Horizontal Scrolling Carousel */
+        .services { background: #fff; padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;}
+        
+        .services-scroller {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 10px 10px 30px 10px; /* Extra bottom padding for scrollbar */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        
+        /* Custom Styling for the Scrollbar */
+        .services-scroller::-webkit-scrollbar { height: 10px; }
+        .services-scroller::-webkit-scrollbar-track { background: var(--light-bg); border-radius: 5px; }
+        .services-scroller::-webkit-scrollbar-thumb { background: #a0aec0; border-radius: 5px; }
+        .services-scroller::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        .service-card {
+            background: var(--light-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            flex: 0 0 320px; /* Fixed width prevents shrinking, forces scroll */
+            scroll-snap-align: start; /* Snaps to the start of the card */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+        .service-img { height: 200px; background: #cbd5e0; display: flex; align-items: center; justify-content: center; color: #718096;}
+        .service-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+        .service-content h3 { margin-top: 0; color: var(--primary); }
+        .service-content p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1;}
+        .service-link { font-weight: bold; color: var(--secondary); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;}
+
+        /* Contact & Google Maps Section */
+        .contact-map { background: var(--light-bg); padding: 80px 0; border-top: 1px solid #e2e8f0; }
+        .map-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .map-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .map-info h2 { font-size: 2.2rem; color: var(--primary); margin-top: 0; margin-bottom: 20px;}
+        .map-info h4 { color: var(--text-main); margin-top: 25px; margin-bottom: 5px;}
+        .map-info p { color: var(--text-light); margin: 0 0 10px 0;}
+        
+        .map-embed {
+            flex: 1.5;
+            min-width: 300px;
+            min-height: 400px;
+        }
+        .map-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block; /* Removes weird bottom margin on iframes */
+        }
+
+        /* Comprehensive Footer */
+        footer { background: #112240; color: #a0aec0; padding: 60px 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: #fff; margin-bottom: 20px; font-size: 1.1rem;}
+        .footer-col p, .footer-col a { display: block; margin-bottom: 12px; font-size: 0.95rem; transition: color 0.3s;}
+        .footer-col a:hover { color: #fff; }
+        .footer-bottom { 
+            text-align: center; 
+            border-top: 1px solid #2d3748; 
+            padding-top: 20px; 
+            font-size: 0.85rem; 
+            display: flex; 
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .top-bar .container { flex-direction: column; gap: 10px; text-align: center; }
+            .top-links { margin-top: 5px; }
+            .top-links a { margin: 0 10px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #fff;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                padding: 15px 0;
+                text-align: center;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { margin: 12px 0; display: block; }
+            .btn-main { margin: 12px auto; }
+            .hero { padding: 80px 0; }
+            .hero .container { flex-direction: column; text-align: center; gap: 30px; }
+            .hero-text { min-width: 100%; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.05rem; }
+            .qr-card { margin: 0 auto; width: 220px; }
+            
+            .services, .contact-map { padding: 50px 0; }
+            .section-header h2 { font-size: 2rem; }
+            .service-card { flex: 0 0 85%; } 
+            
+            .map-wrapper { flex-direction: column; }
+            .map-embed { min-height: 300px; }
+            .map-info { padding: 30px 20px; text-align: center; }
+
+            .footer-bottom { flex-direction: column; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container">
+            <div>
+                <span class="hours-badge" id="dynamic-hours">Loading Hours...</span>
+                <span>Need help? Call us at <strong>(847) 948-8100</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="container">
+            <div class="logo">Lee's Hana Lei Cleaners</div>
+            <div class="menu-toggle" id="mobile-menu-btn">☰</div>
+            <div class="nav-links" id="nav-links">
+                <a href="#services">Services</a>
+                <a href="#contact-map">Location</a>
+                <a href="#contact-footer">Contact</a>
+                <a href="#signup" class="btn-main">Schedule Pickup</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-text">
+                <h1>Deerfield's Trusted<br>Dry Cleaning.</h1>
+                <p>Premium dry cleaning and laundry services delivered to your door or ready for pickup. Experience meticulous care utilizing state-of-the-art, eco-friendly technology.</p>
+                <a href="#services" class="btn-main" style="margin: 0; padding: 15px 30px; font-size: 1.1rem;">Explore Our Services</a>
+            </div>
+            
+            <div class="qr-card">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://yourwebsite.com/coupon" alt="Scan for Coupon">
+                <h4>Scan & Save</h4>
+                <p>Get 20% off your first dry cleaning order!</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tailored Cleaning Services</h2>
+                <p style="color: var(--text-light);">Explore premium care made for your unique needs.</p>
+            </div>
+            
+            <div class="services-scroller" id="services-carousel">
+                <div class="service-card">
+                    <img src="images/clean-1.jpg" alt="Dry Cleaning">
+                    <div class="service-content">
+                        <h3>Dry Cleaning</h3>
+                        <p>Expert stain removal and hand-pressing for suits, blouses, and garments requiring delicate attention to detail.</p>
+                        <a href="#" class="service-link">Learn More →</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="images/fold-1.jpg" alt="Wash & Fold Laundry">
+                    <div class="service-content">
+                        <h3>Wash & Fold Laundry</h3>
+                        <p>No more sorting or folding. Perfect for busy lives—your everyday laundry returned fresh, sanitized, and neatly stacked.</p>
+                        <a href="#" class="service-link">Learn More →</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="images/alteration-2.jpg" alt="Expert Alterations" class="w-full h-64 object-cover">
+                    <div class="service-content">
+                        <h3>Expert Alterations</h3>
+                        <p>Make that perfect fit happen. Our experienced tailors handle everything from simple hems and zipper repairs to complex garment reshaping.</p>
+                        <a href="#" class="service-link">Learn More →</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="images/rug-1.jpg" alt="Household Items">
+                    <div class="service-content">
+                        <h3>Household Items</h3>
+                        <p>Breathe new life into your home. We professionally clean bulky comforters, duvets, fine linens, and area rugs.</p>
+                        <a href="#" class="service-link">Learn More →</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="images/dress-1.jpg" alt="Bridal Preservation">
+                    <div class="service-content">
+                        <h3>Bridal Preservation</h3>
+                        <p>Protect your most cherished memories. Museum-quality cleaning and anti-yellowing preservation boxing for wedding gowns.</p>
+                        <a href="#" class="service-link">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-map" id="contact-map">
+        <div class="container">
+            <div class="map-wrapper">
+                <div class="map-info">
+                    <h2>Visit Us Today</h2>
+                    <p>Stop by our convenient Deerfield location for all your garment care needs.</p>
+                    
+                    <h4>Address</h4>
+                    <p>650 Deerfield Rd<br>Deerfield, IL 60015</p>
+
+                    <h4>Contact</h4>
+                    <p>📞 (847) 948-8100</p>
+                    <p>✉️ info@leeshanaleicleaners.com</p>
+
+                    <h4>Store Hours</h4>
+                    <p>Mon - Fri: 7:00 AM - 6:00 PM<br>Saturday: 8:00 AM - 4:00 PM<br>Sunday: Closed</p>
+                </div>
+                <div class="map-embed">
+                    <iframe src="https://maps.google.com/maps?q=650%20Deerfield%20Rd,%20Deerfield,%20IL%2060015&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Lee's Hana Lei Cleaners</h4>
+                    <p>Deerfield's Trusted<br>Dry Cleaning.</p>
+                    <p>✉️ info@leeshanaleicleaners.com</p>
+                    <p>📞 (847) 948-8100</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <a href="#">Dry Cleaning</a>
+                    <a href="#">Wash & Fold</a>
+                    <a href="#">Alterations</a>
+                    <a href="#">Household Items</a>
+                    <a href="#">Wedding Dress Preservation</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Location</h4>
+                    <p><strong>Lee's Hana Lei Cleaners</strong><br>650 Deerfield Rd<br>Deerfield, IL 60015</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© 2026 Lee's Hana Lei Cleaners. All Rights Reserved.</div>
+                <div>Website built by Cho Web Services</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- DYNAMIC HOURS LOGIC ---
+            const storeHours = [
+                "Today: Closed",             // Sunday
+                "Today: 7:00 AM - 6:00 PM",  // Monday
+                "Today: 7:00 AM - 6:00 PM",  // Tuesday
+                "Today: 7:00 AM - 6:00 PM",  // Wednesday
+                "Today: 7:00 AM - 6:00 PM",  // Thursday
+                "Today: 7:00 AM - 6:00 PM",  // Friday
+                "Today: 8:00 AM - 4:00 PM"   // Saturday
+            ];
+            const currentDayIndex = new Date().getDay();
+            document.getElementById("dynamic-hours").innerText = storeHours[currentDayIndex];
+
+            // --- MOBILE MENU TOGGLE LOGIC ---
+            const menuBtn = document.getElementById("mobile-menu-btn");
+            const navLinks = document.getElementById("nav-links");
+            menuBtn.addEventListener("click", function() {
+                navLinks.classList.toggle("active");
+            });
+
+            // --- SERVICES CAROUSEL AUTO-SCROLL LOGIC ---
+            const scroller = document.getElementById("services-carousel");
+            let autoScrollTimer;
+
+            function startAutoScroll() {
+                autoScrollTimer = setInterval(() => {
+                    // Check if we've reached the end of the scroll container
+                    if (scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 10) {
+                        // Smoothly scroll back to the beginning
+                        scroller.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        // Calculate width of one card + gap, then scroll to the right
+                        const card = scroller.querySelector('.service-card');
+                        const gap = parseInt(window.getComputedStyle(scroller).gap) || 25;
+                        scroller.scrollBy({ left: card.offsetWidth + gap, behavior: 'smooth' });
+                    }
+                }, 3000); // Trigger a scroll every 3 seconds
+            }
+
+            function stopAutoScroll() {
+                clearInterval(autoScrollTimer);
+            }
+
+            // Initialize auto-scrolling
+            startAutoScroll();
+
+            // Pause scrolling when user interacts (hover or touch)
+            scroller.addEventListener("mouseenter", stopAutoScroll);
+            scroller.addEventListener("mouseleave", startAutoScroll);
+            scroller.addEventListener("touchstart", stopAutoScroll, {passive: true});
+            scroller.addEventListener("touchend", startAutoScroll, {passive: true});
+        });
+    </script>
+</body>
+</html>
