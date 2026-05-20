@@ -115,24 +115,69 @@
         .hero h1 { font-size: 3.5rem; margin-top: 0; margin-bottom: 15px; line-height: 1.2; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; color: #e2e8f0; }
         
-        /* QR Code Card */
-        .qr-card {
+        /* Monthly Promotion Card */
+        .promo-card {
             background: #fff;
-            padding: 25px;
+            padding: 30px 28px;
             border-radius: 12px;
             text-align: center;
             color: var(--text-main);
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             flex-shrink: 0;
-            width: 200px;
+            width: 280px;
+            position: relative;
+            border-top: 6px solid var(--secondary);
         }
-        .qr-card img {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 15px;
+        .promo-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
         }
-        .qr-card h4 { margin: 0 0 5px 0; color: var(--secondary); font-size: 1.2rem; }
-        .qr-card p { margin: 0; font-size: 0.85rem; color: var(--text-light); }
+        .promo-card h3 {
+            margin: 10px 0 8px 0;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        .promo-card .promo-offer {
+            font-size: 2.4rem;
+            font-weight: bold;
+            color: var(--secondary);
+            line-height: 1;
+            margin: 10px 0 8px 0;
+        }
+        .promo-card .promo-desc {
+            margin: 0 0 18px 0;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+        .promo-card .promo-code {
+            display: inline-block;
+            background: var(--light-bg);
+            border: 1px dashed #a0aec0;
+            color: var(--primary);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+        .promo-card .promo-expires {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
 
         /* Specialized Services - Horizontal Scrolling Carousel */
         .services { background: #fff; padding: 80px 0; }
@@ -166,6 +211,14 @@
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+        .service-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            background: #cbd5e0;
+        }
         .service-img { height: 200px; background: #cbd5e0; display: flex; align-items: center; justify-content: center; color: #718096;}
         .service-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
         .service-content h3 { margin-top: 0; color: var(--primary); }
@@ -225,7 +278,10 @@
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
-            .top-bar .container { flex-direction: column; gap: 10px; text-align: center; }
+            .top-bar { padding: 10px 0; }
+            .top-bar .container { flex-direction: column; gap: 8px; text-align: center; }
+            .top-bar .container > div { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+            .hours-badge { margin-right: 0; }
             .top-links { margin-top: 5px; }
             .top-links a { margin: 0 10px; }
             .menu-toggle { display: block; }
@@ -249,14 +305,15 @@
             .hero-text { min-width: 100%; }
             .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1.05rem; }
-            .qr-card { margin: 0 auto; width: 220px; }
+            .promo-card { margin: 0 auto; width: 260px; }
             
             .services, .contact-map { padding: 50px 0; }
             .section-header h2 { font-size: 2rem; }
             .service-card { flex: 0 0 85%; } 
             
             .map-wrapper { flex-direction: column; }
-            .map-embed { min-height: 300px; }
+            .map-embed { min-height: 0; height: auto; aspect-ratio: 4 / 3; width: 100%; }
+            .map-embed iframe { height: 100%; }
             .map-info { padding: 30px 20px; text-align: center; }
 
             .footer-bottom { flex-direction: column; justify-content: center; }
@@ -294,10 +351,12 @@
                 <a href="#services" class="btn-main" style="margin: 0; padding: 15px 30px; font-size: 1.1rem;">Explore Our Services</a>
             </div>
             
-            <div class="qr-card">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://yourwebsite.com/coupon" alt="Scan for Coupon">
-                <h4>Scan & Save</h4>
-                <p>Get 20% off your first dry cleaning order!</p>
+            <div class="promo-card">
+                <span class="promo-badge">May Special</span>
+                <h3>Spring Comforter Cleaning</h3>
+                <div class="promo-offer">25% OFF</div>
+                <p class="promo-desc">Freshen up your bedding for the season. All comforters and duvets.</p>
+                <p class="promo-expires">Offer valid through May 31, 2026</p>
             </div>
         </div>
     </header>
@@ -315,31 +374,34 @@
                     <div class="service-content">
                         <h3>Dry Cleaning</h3>
                         <p>Expert stain removal and hand-pressing for suits, blouses, and garments requiring delicate attention to detail.</p>
-                        <a href="#" class="service-link">Learn More →</a>
                     </div>
                 </div>
                 <div class="service-card">
-                    <img src="images/fold-1.jpg" alt="Expert shirt ">
+                    <img src="images/fold-1.jpg" alt="fold laundry">
                     <div class="service-content">
                         <h3>Wash & Fold Laundry</h3>
                         <p>No more sorting or folding. Perfect for busy lives—your everyday laundry returned fresh, sanitized, and neatly stacked.</p>
-                        <a href="#" class="service-link">Learn More →</a>
                     </div>
                 </div>
                 <div class="service-card">
-                    <img src="images/alteration-2.jpg" alt="Expert Alterations" class="w-full h-64 object-cover">
+                    <img src="images/shirt-1.jpg" alt="Expert shirt ">
                     <div class="service-content">
-                        <h3>Expert Alterations</h3>
-                        <p>Make that perfect fit happen. Our experienced tailors handle everything from simple hems and zipper repairs to complex garment reshaping.</p>
-                        <a href="#" class="service-link">Learn More →</a>
+                        <h3>Expert Shirt Cleaning</h3>
+                        <p>Specialized care for your shirts, ensuring they look their best after every wash.</p>
                     </div>
                 </div>
                 <div class="service-card">
-                    <img src="images/rug-1.jpg" alt="Leather and Suade Cleaning">
+                    <img src="images/alteration-2.jpg" alt=" Alterations and Repairs" class="w-full h-64 object-cover">
+                    <div class="service-content">
+                        <h3>Alterations and Repairs</h3>
+                        <p>Make that perfect fit happen. Our experienced tailors handle everything from simple hems and zipper repairs to complex garment reshaping.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="images/leather-1.jpg" alt="Leather and Suade Cleaning">
                     <div class="service-content">
                         <h3>Leather and Suade Cleaning</h3>
                         <p>Restore the beauty of your leather and suede items with our specialized cleaning process.</p>
-                        <a href="#" class="service-link">Learn More →</a>
                     </div>
                 </div>
                 <div class="service-card">
@@ -347,7 +409,6 @@
                     <div class="service-content">
                         <h3>Bridal Preservation</h3>
                         <p>Protect your most cherished memories. Museum-quality cleaning and anti-yellowing preservation boxing for wedding gowns.</p>
-                        <a href="#" class="service-link">Learn More →</a>
                     </div>
                 </div>
             </div>
@@ -389,11 +450,12 @@
                 </div>
                 <div class="footer-col">
                     <h4>Our Services</h4>
-                    <a href="#">Dry Cleaning</a>
-                    <a href="#">Wash & Fold</a>
-                    <a href="#">Alterations</a>
-                    <a href="#">Household Items</a>
-                    <a href="#">Wedding Dress Preservation</a>
+                    <a href="#services">Dry Cleaning</a>
+                    <a href="#services">Wash & Fold Laundry</a>
+                    <a href="#services">Expert Shirt Cleaning</a>
+                    <a href="#services">Alterations and Repairs</a>
+                    <a href="#services">Leather and Suede Cleaning</a>
+                    <a href="#services">Bridal Preservation</a>
                 </div>
                 <div class="footer-col">
                     <h4>Location</h4>
